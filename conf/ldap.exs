@@ -1,5 +1,5 @@
-config :pleroma, Pleroma.Web.Auth.Authenticator, Pleroma.Web.Auth.LDAPAuthenticator
-config :pleroma, :ldap,
+config :akkoma, Pleroma.Web.Auth.Authenticator, Pleroma.Web.Auth.LDAPAuthenticator
+config :akkoma, :ldap,
   enabled: true,
   host: "localhost",
   port: 389,
