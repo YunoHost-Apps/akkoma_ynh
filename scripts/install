@@ -218,7 +218,7 @@ ynh_replace_string --match_string="registrations_open: true" --replace_string="r
 pushd $final_path/live
 	ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$final_path/live/bin/pleroma_ctl migrate"
 
-	ynh_systemd_action --service_name=$app --action="start" --log_path=systemd --line_match="Access akkoma.Web.Endpoint"
+	ynh_systemd_action --service_name=$app --action="start" --log_path=systemd --line_match="Access Pleroma.Web.Endpoint"
 
 	# Add user
 	ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$final_path/live/bin/pleroma_ctl user new $admin $admin_email --password $password --moderator --admin -y"
@@ -257,7 +257,7 @@ yunohost service add $app --description="$app daemon for akkoma"
 ynh_script_progression --message="Starting a systemd service..." --weight=1
 
 # Start a systemd service
-ynh_systemd_action --service_name=$app --action="start" --log_path=systemd --line_match="Access akkoma.Web.Endpoint"
+ynh_systemd_action --service_name=$app --action="start" --log_path=systemd --line_match="Access Pleroma.Web.Endpoint"
 
 #=================================================
 # SETUP SSOWAT
