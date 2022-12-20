@@ -14,11 +14,11 @@ Group=__APP__
 Environment="MIX_ENV=prod"
 
 ; Make sure that all paths fit your installation.
-; Path to the home directory of the user running the Pleroma service.
+; Path to the home directory of the user running the Akkoma service.
 Environment="HOME=__FINALPATH__/live/"
-; Path to the folder containing the Pleroma installation.
+; Path to the folder containing the Akkoma installation.
 WorkingDirectory=__FINALPATH__/live/
-; Path to the Pleroma binary.
+; Path to the Pleroma binary. ; It has to be Pleroma not Akkoma
 ExecStart=__FINALPATH__/live/bin/pleroma start
 ExecStop=__FINALPATH__/live/bin/pleroma stop
 
