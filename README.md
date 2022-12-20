@@ -5,7 +5,7 @@ It shall NOT be edited by hand.
 
 # Akkoma for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/akkoma.svg)](https://dash.yunohost.org/appci/app/akkoma) ![Working status](https://ci-apps.yunohost.org/ci/badges/akkoma.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/akkoma.maintain.svg)
+[![Integration level](https://dash.yunohost.org/integration/akkoma.svg)](https://dash.yunohost.org/appci/app/akkoma) ![Working status](https://ci-apps.yunohost.org/ci/badges/akkoma.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/akkoma.maintain.svg)  
 [![Install Akkoma with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=akkoma)
 
 *[Lire ce readme en français.](./README_fr.md)*
@@ -19,9 +19,11 @@ Akkoma is a microblogging server software that can federate (= exchange messages
 
 **Mastodon web front-end for Akkoma:** Add **/web** in front of your Akkoma domain, eg. akkoma.domain.tld/web
 
+
+
 **Shipped version:** 3.5.0~ynh1
 
-**Demo:** https://otp.akkoma.dev/
+**Demo:** https://otp.akkoma.dev
 
 ## Screenshots
 
@@ -37,19 +39,19 @@ Akkoma is a microblogging server software that can federate (= exchange messages
 - LDAP supported but HTTP auth not.
 
 ## Admin Tasks
-Go to **cd /var/www/akkoma/live**.
+Go to **cd /var/www/pleroma/live**.
 
 ### Adding users
 
 **Run:**
 
-    $ ( cd /var/www/akkoma/live && sudo -u akkoma MIX_ENV=prod ./bin/pleroma_ctl user new <NICKNAME> <EMAIL> )
+    $ ( cd /var/www/pleroma/live && sudo -u pleroma MIX_ENV=prod ./bin/pleroma_ctl user new <NICKNAME> <EMAIL> )
 
 ### Password reset
 
 **Run:**
 
-    $ ( cd /var/www/akkoma/live && sudo -u akkoma MIX_ENV=prod ./bin/pleroma_ctl user reset_password <NICKNAME> )
+    $ ( cd /var/www/pleroma/live && sudo -u pleroma MIX_ENV=prod ./bin/pleroma_ctl user reset_password <NICKNAME> )
 
 This will generate a **password reset link** that you can then send to the user.
 
@@ -59,15 +61,15 @@ You can make users **moderators**. They will then be able to **delete any post**
 
 **Run:**
 
-    $ ( cd /var/www/akkoma/live && sudo -u akkoma MIX_ENV=prod ./bin/pleroma_ctl user set <NICKNAME> --[no-]admin )
+    $ ( cd /var/www/pleroma/live && sudo -u pleroma MIX_ENV=prod ./bin/pleroma_ctl user set <NICKNAME> --[no-]admin )
 
 **--admin** option will **make the user moderator** and **--no-admin** will **take away the moderator privileges** from the user.
 
 ## Documentation and resources
 
 * Official app website: <https://akkoma.social/>
-* Official admin documentation: <https://docs.akkoma.social/>
-* Upstream app code repository: <https://git.akkoma.social/akkoma/akkoma/>
+* Official admin documentation: <https://docs.akkoma.dev/stable/>
+* Upstream app code repository: <https://akkoma.dev/AkkomaGang/akkoma/>
 * YunoHost documentation for this app: <https://yunohost.org/app_akkoma>
 * Report a bug: <https://github.com/YunoHost-Apps/akkoma_ynh/issues>
 
