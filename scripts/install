@@ -233,16 +233,6 @@ chmod 400 "$config"
 chown $app:$app "$config"
 
 #=================================================
-# INSTALL BASIC FRONTENDS
-#=================================================
-
-# Pleroma Front-End
-#ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$final_path/live/bin/pleroma_ctl frontend install pleroma-fe --ref stable"
-
-# Admin Front-End
-#ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$final_path/live/bin/pleroma_ctl frontend install admin-fe --ref stable"
-
-#=================================================
 # GENERIC FINALIZATION
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
@@ -283,6 +273,19 @@ ynh_permission_create --permission="api" --url="/api" --allowed="visitors" --aut
 ynh_script_progression --message="Reloading NGINX web server..." --weight=1
 
 ynh_systemd_action --service_name=nginx --action=reload
+
+#=================================================
+# INSTALL BASIC FRONTENDS
+#=================================================
+#### Fontends need Akkoma to be already running, so they are installed at the very end
+
+# Pleroma Front-End
+ynh_script_progression --message="Installing Pleroma FrontEnd..." --weight=1
+ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$final_path/live/bin/pleroma_ctl frontend install pleroma-fe --ref stable"
+
+# Admin Front-End
+ynh_script_progression --message="Installing Admin FrontEnd..." --weight=1
+ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$final_path/live/bin/pleroma_ctl frontend install admin-fe --ref stable"
 
 #=================================================
 # END OF SCRIPT
