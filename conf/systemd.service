@@ -7,20 +7,20 @@ ExecReload=/bin/kill $MAINPID
 KillMode=process
 Restart=on-failure
 
-; Name of the user that runs the Pleroma service.
+; Name of the user that runs the Akkoma service.
 User=__APP__
 Group=__APP__
-; Declares that Pleroma runs in production mode.
+; Declares that Akkoma runs in production mode.
 Environment="MIX_ENV=prod"
 
 ; Make sure that all paths fit your installation.
-; Path to the home directory of the user running the Pleroma service.
+; Path to the home directory of the user running the Akkoma service.
 Environment="HOME=__FINALPATH__/live/"
-; Path to the folder containing the Pleroma installation.
+; Path to the folder containing the Akkoma installation.
 WorkingDirectory=__FINALPATH__/live/
-; Path to the Pleroma binary.
-ExecStart=__FINALPATH__/live/bin/akkoma start
-ExecStop=__FINALPATH__/live/bin/akkoma stop
+; Path to the Pleroma binary. ; It has to be Pleroma not Akkoma
+ExecStart=__FINALPATH__/live/bin/pleroma start
+ExecStop=__FINALPATH__/live/bin/pleroma stop
 
 ; Some security directives.
 ; Use private /tmp and /var/tmp folders inside a new file system namespace, which are discarded after the process stops.

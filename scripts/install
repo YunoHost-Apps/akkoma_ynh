@@ -171,6 +171,9 @@ chown $app:$app /etc/$app
 #=================================================
 # SETUP SYSTEMD
 #=================================================
+### fake akkoma executable
+ln -s "$final_path/live/bin/pleroma" "$final_path/live/bin/akkoma"
+
 ynh_script_progression --message="Configuring a systemd service..." --weight=1
 
 # Create a dedicated systemd config
@@ -215,7 +218,7 @@ ynh_replace_string --match_string="registrations_open: true" --replace_string="r
 pushd $final_path/live
 	ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$final_path/live/bin/pleroma_ctl migrate"
 
-	ynh_systemd_action --service_name=$app --action="start" --log_path=systemd --line_match="Access akkoma.Web.Endpoint"
+	ynh_systemd_action --service_name=$app --action="start" --log_path=systemd --line_match="Access Pleroma.Web.Endpoint"
 
 	# Add user
 	ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$final_path/live/bin/pleroma_ctl user new $admin $admin_email --password $password --moderator --admin -y"
@@ -228,16 +231,6 @@ ynh_store_file_checksum --file="$config"
 
 chmod 400 "$config"
 chown $app:$app "$config"
-
-#=================================================
-# INSTALL BASIC FRONTENDS
-#=================================================
-
-# Pleroma Front-End
-ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$final_path/live/bin/pleroma_ctl frontend install pleroma-fe --ref stable"
-
-# Admin Front-End
-ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$final_path/live/bin/pleroma_ctl frontend install admin-fe --ref stable"
 
 #=================================================
 # GENERIC FINALIZATION
@@ -254,7 +247,7 @@ yunohost service add $app --description="$app daemon for akkoma"
 ynh_script_progression --message="Starting a systemd service..." --weight=1
 
 # Start a systemd service
-ynh_systemd_action --service_name=$app --action="start" --log_path=systemd --line_match="Access akkoma.Web.Endpoint"
+ynh_systemd_action --service_name=$app --action="start" --log_path=systemd --line_match="Access Pleroma.Web.Endpoint"
 
 #=================================================
 # SETUP SSOWAT
@@ -280,6 +273,19 @@ ynh_permission_create --permission="api" --url="/api" --allowed="visitors" --aut
 ynh_script_progression --message="Reloading NGINX web server..." --weight=1
 
 ynh_systemd_action --service_name=nginx --action=reload
+
+#=================================================
+# INSTALL BASIC FRONTENDS
+#=================================================
+#### Fontends need Akkoma to be already running, so they are installed at the very end
+
+# Pleroma Front-End
+ynh_script_progression --message="Installing Pleroma FrontEnd..." --weight=1
+ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$final_path/live/bin/pleroma_ctl frontend install pleroma-fe --ref stable"
+
+# Admin Front-End
+ynh_script_progression --message="Installing Admin FrontEnd..." --weight=1
+ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$final_path/live/bin/pleroma_ctl frontend install admin-fe --ref stable"
 
 #=================================================
 # END OF SCRIPT
