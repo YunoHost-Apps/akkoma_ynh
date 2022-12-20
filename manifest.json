@@ -6,7 +6,7 @@
         "en": "A free, federated social networking server built on ActivityPub open protocol. Derivate of Pleroma.",
         "fr": "Un serveur de réseautage social fédéré et gratuit basé sur le protocole ouvert ActivityPub. Derivé de Pleroma."
     },
-    "version": "3.5.0~ynh1",
+    "version": "3.5.0~ynh2",
     "url": "https://akkoma.social/",
     "upstream": {
         "license": "AGPL-3.0-only",
