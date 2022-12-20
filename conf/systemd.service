@@ -7,10 +7,10 @@ ExecReload=/bin/kill $MAINPID
 KillMode=process
 Restart=on-failure
 
-; Name of the user that runs the Pleroma service.
+; Name of the user that runs the Akkoma service.
 User=__APP__
 Group=__APP__
-; Declares that Pleroma runs in production mode.
+; Declares that Akkoma runs in production mode.
 Environment="MIX_ENV=prod"
 
 ; Make sure that all paths fit your installation.
