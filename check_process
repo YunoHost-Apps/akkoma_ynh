@@ -1,0 +1,25 @@
+;; Test complet
+	; Manifest
+		domain="domain.tld"
+		is_public=1
+		admin="john"
+		password="1Strong-Password"
+		name="My_Pleroma"
+		registration=0
+		cache=1
+		size="2g"
+	; Checks
+		pkg_linter=1
+		setup_sub_dir=0
+		setup_root=1
+		setup_nourl=0
+		setup_private=1
+		setup_public=1
+		upgrade=1
+		backup_restore=1
+		multi_instance=0
+		port_already_use=0
+		change_url=1
+;;; Options
+Email=
+Notification=none
