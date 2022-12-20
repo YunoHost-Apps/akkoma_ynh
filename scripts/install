@@ -237,10 +237,10 @@ chown $app:$app "$config"
 #=================================================
 
 # Pleroma Front-End
-ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$final_path/live/bin/pleroma_ctl frontend install pleroma-fe --ref stable"
+#ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$final_path/live/bin/pleroma_ctl frontend install pleroma-fe --ref stable"
 
 # Admin Front-End
-ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$final_path/live/bin/pleroma_ctl frontend install admin-fe --ref stable"
+#ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$final_path/live/bin/pleroma_ctl frontend install admin-fe --ref stable"
 
 #=================================================
 # GENERIC FINALIZATION
