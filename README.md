@@ -21,7 +21,7 @@ Akkoma is a microblogging server software that can federate (= exchange messages
 
 
 
-**Shipped version:** 3.5.0~ynh2
+**Shipped version:** 3.5.0~ynh3
 
 **Demo:** https://otp.akkoma.dev
 
