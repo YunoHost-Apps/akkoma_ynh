@@ -278,11 +278,12 @@ ynh_systemd_action --service_name=nginx --action=reload
 # POST INSTALL
 #=================================================
 
+ynh_script_progression --message="Configure admin UI to allow it to change setting..." --weight=1
 # Correct path to 'static dir' in DB
 # This must be done when Akkoma is running (i.e. after install and start)
 ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$final_path/live/bin/pleroma_ctl config migrate_to_db"
 # allow configuration from the admin UI
-ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "sed -i 's/configurable_from_database: false/configurable_from_database: true' $config"
+ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "sed -i 's/configurable_from_database: false/configurable_from_database: true/' $config"
 # restart Akkoma for the new setting to take effect
 ynh_systemd_action --service_name=$app --action="restart" --log_path=systemd
 
@@ -303,6 +304,7 @@ ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$final_path/live/bin/pleroma_
 # INSTALL MANGANE FRONTEND
 #=================================================
 # Mangane alternative Front-End will be built in, ready to enable
+ynh_script_progression --message="Installing Mangane FrontEnd..." --weight=1
 ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$final_path/live/bin/pleroma_ctl frontend install mangane --ref dist --build-url https://github.com/BDX-town/Mangane/releases/latest/download/static.zip"
 # Not activated, users need to change the "primary" frontend in the admin UI (use 'mangane' and 'dist').
 
