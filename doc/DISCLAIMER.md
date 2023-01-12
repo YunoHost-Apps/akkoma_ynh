@@ -1,3 +1,7 @@
+## Login fails if password contains special characters
+
+See [#4](https://github.com/YunoHost-Apps/akkoma_ynh/issues/4) for more explaination.
+
 ## Limitations
 
 - **Akkoma** require a dedicated **root domain**, eg. akkoma.domain.tld
