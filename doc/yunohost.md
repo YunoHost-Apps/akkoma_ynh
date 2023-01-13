@@ -2,7 +2,7 @@
 
 Some information, for all intents and purposes, on the differences between a _direct_ installation of Akkoma from official package, and the installation with the Yunohost application package.
 
-|                              | Official Package            | Avec Yunohost                           |
+|                              | Official Package            | With Yunohost                           |
 | ---------------------------- | --------------------------- | --------------------------------------- |
 | Installation directory       | `/opt/akkoma`               | `/var/www/akkoma/live/`                 |
 | Static directory             | `/var/lib/akkoma/static`    | `/etc/akkoma/config.exs`                |
