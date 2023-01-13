@@ -3,8 +3,8 @@
     "id": "akkoma",
     "packaging_format": 1,
     "description": {
-        "en": "A free, federated social networking server built on ActivityPub open protocol. Derivate of Pleroma.",
-        "fr": "Un serveur de réseautage social fédéré et gratuit basé sur le protocole ouvert ActivityPub. Derivé de Pleroma."
+        "en": "Federated social networking server built on ActivityPub open protocol",
+        "fr": "Serveur de réseautage social fédéré basé sur le protocole ouvert ActivityPub"
     },
     "version": "3.5.0~ynh3",
     "url": "https://akkoma.social/",
@@ -61,7 +61,7 @@
                 "name": "registration",
                 "type": "boolean",
                 "ask": {
-                    "en": "Should registration be open to users who do not have a Yunohost account on the system?",
+                    "en": "Should registration be open to users who do not have a YunoHost account on the system?",
                     "fr": "L'inscription doit-elle être ouverte aux utilisateurs qui n'ont pas de compte YunoHost sur le système ?"
                 },
                 "default": false
@@ -70,7 +70,7 @@
                 "name": "cache",
                 "type": "boolean",
                 "ask": {
-                    "en": "Enable media-cache for your instance : downloaded media won't be downloaded twice, at the price of storage capacity.",
+                    "en": "Enable media-cache for your instance: downloaded media won't be downloaded twice, at the price of storage capacity.",
                     "fr": "Activer le cache média pour votre instance : les médias téléchargés le seront pas deux fois, au prix d'un plus grande utilisation de l'espace de stockage."
                 },
                 "default": true
