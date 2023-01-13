@@ -1,6 +1,6 @@
 # Yunohost and Akkoma
 
-Some information, for all intents and purposes, on the differences between a _direct_ installation of Akkoma from official package, and the installation with the Yunohost application package.
+Some information, for all intents and purposes, on the differences between a _direct_ installation of Akkoma from official release, and the installation with the Yunohost application package.
 
 |                              | Official Package            | With Yunohost                           |
 | ---------------------------- | --------------------------- | --------------------------------------- |
@@ -15,4 +15,4 @@ Some information, for all intents and purposes, on the differences between a _di
 
 - Akkoma is a compatible _fork_ of Pleroma, so the command line administration uses `pleroma_ctl` (this is not a typo).
 
-- Administration commands with CLI must *imperatively* be prefixed with `sudo` otherwise they won't work.
+- Administration commands with CLI must _imperatively_ be prefixed with `sudo` otherwise they won't work.
