@@ -1,18 +1,18 @@
-# Akkoma et Yunohost
+# Akkoma and Yunohost
 
-Quelques informations, à toutes fins utiles, sur les différences entre une installation directe d’Akkoma (depuis les _releases_) et l’installation avec le package d’application de Yunohost.
+Some information, for all intents and purposes, on the differences between a direct installation of Akkoma (from the _releases_) and installation with the Yunohost application package.
 
-|                             | Package officiel           | Avec Yunohost                           |
+|                             | Official Package           | With Yunohost                           |
 | --------------------------- | -------------------------- | --------------------------------------- |
-| Répertoire d’installation   | `/opt/akkoma`              | `/var/www/akkoma/live/`                 |
-| Répertoire statique         | `/var/lib/akkoma/static`   | `/etc/akkoma/config.exs`                |
-| Fichier de configuration    | `/etc/akkoma/config.exs`   | `/etc/akkoma/config.exs`                |
-| Ligne de commandes          | `/bin/pleroma_ctl`         | `/var/www/akkoma/live/bin/pleroma_ctl`  |
+| Install directory           | `/opt/akkoma`              | `/var/www/akkoma/live/`                 |
+| RStatic directory           | `/var/lib/akkoma/static`   | `/etc/akkoma/config.exs`                |
+| Configuration file          | `/etc/akkoma/config.exs`   | `/etc/akkoma/config.exs`                |
+| Command line path           | `/bin/pleroma_ctl`         | `/var/www/akkoma/live/bin/pleroma_ctl`  |
 
-## A noter 
+## Things to remember
 
-- L’installation d’Akkoma avec Yunohost est une installation dite OTP (et non MIX, c’est à dire à partir des sources). Information à mémoriser, dans la mesure où les commandes d’administration ne sont pas les mêmes dans l’un ou l’autre cas.
+- The installation of Akkoma with Yunohost is a so-called OTP installation (and not MIX, i.e. from the sources). Have this in mind, as the administration commands are not the same in either case.
 
-- Akkoma est un _fork_ (divergence) de Pleroma, la commande d’administration est donc bien `pleroma_ctl` (ce n’est pas une faute de saisie).
+- Akkoma is a _fork_ (divergence) of Pleroma, so the administration command is indeed `pleroma_ctl` (this is not a typo).
 
-- Les commandes d’administration doivent être _impérativement_ préfixées avec `sudo` sinon cela fonctionne pas, l’utilisateur Akkoma n’ayant pas directement accès au shell.
+- Administration commands in CLI must _necessarily_ be prefixed with `sudo` otherwise it doesn't work, as the `akkoma` system user does not have direct access to the shell.
