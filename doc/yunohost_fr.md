@@ -15,4 +15,3 @@ Quelques informations, à toutes fins utiles, sur les différences entre une ins
 
 - Akkoma est un _fork_ (divergence) de Pleroma, la commande d’administration est donc bien `pleroma_ctl` (ce n’est pas une faute de saisie).
 
-- Les commandes d’administration doivent être _impérativement_ préfixées avec `sudo` sinon cela fonctionne pas, l’utilisateur Akkoma n’ayant pas directement accès au shell.
