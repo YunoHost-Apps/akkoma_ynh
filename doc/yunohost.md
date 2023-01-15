@@ -13,5 +13,5 @@ Some information, for all intents and purposes, on the differences between a dir
 
 - The installation of Akkoma with Yunohost is a so-called OTP installation (and not MIX, i.e. from the sources). Have this in mind, as the administration commands are not the same in either case.
 
-- Akkoma is a _fork_ (divergence) of Pleroma, so the administration command is indeed `pleroma_ctl` (this is not a typo).
+- Akkoma is a _fork_ of Pleroma, so the administration command is indeed `pleroma_ctl` (this is not a typo).
 
