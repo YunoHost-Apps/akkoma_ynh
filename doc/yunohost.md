@@ -15,4 +15,3 @@ Some information, for all intents and purposes, on the differences between a dir
 
 - Akkoma is a _fork_ (divergence) of Pleroma, so the administration command is indeed `pleroma_ctl` (this is not a typo).
 
-- Administration commands in CLI must _necessarily_ be prefixed with `sudo` otherwise it doesn't work, as the `akkoma` system user does not have direct access to the shell.
