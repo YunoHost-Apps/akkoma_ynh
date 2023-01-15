@@ -232,6 +232,10 @@ ynh_store_file_checksum --file="$config"
 chmod 400 "$config"
 chown $app:$app "$config"
 
+ynh_script_progression --message="Configure admin UI to allow it to change setting - step 1/2" --weight=1
+# change config file to allow configuration from the admin UI
+ynh_replace_string --match_string="configurable_from_database: false" --replace_string="configurable_from_database: true" --target_file="$config"
+
 #=================================================
 # GENERIC FINALIZATION
 #=================================================
@@ -278,14 +282,10 @@ ynh_systemd_action --service_name=nginx --action=reload
 # POST INSTALL
 #=================================================
 
-ynh_script_progression --message="Configure admin UI to allow it to change setting..." --weight=1
+ynh_script_progression --message="Configure admin UI to allow it to change setting - step 2/2" --weight=1
 # Correct path to 'static dir' in DB
 # This must be done when Akkoma is running (i.e. after install and start)
 ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$final_path/live/bin/pleroma_ctl config migrate_to_db"
-# allow configuration from the admin UI
-ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "sed -i 's/configurable_from_database: false/configurable_from_database: true/' $config"
-# restart Akkoma for the new setting to take effect
-ynh_systemd_action --service_name=$app --action="restart" --log_path=systemd
 
 #=================================================
 # INSTALL BASIC FRONTENDS
