@@ -5,15 +5,15 @@ It shall NOT be edited by hand.
 
 # Akkoma pour YunoHost
 
-[![Niveau d'intégration](https://dash.yunohost.org/integration/akkoma.svg)](https://dash.yunohost.org/appci/app/akkoma) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/akkoma.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/akkoma.maintain.svg)  
+[![Niveau d’intégration](https://dash.yunohost.org/integration/akkoma.svg)](https://dash.yunohost.org/appci/app/akkoma) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/akkoma.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/akkoma.maintain.svg)  
 [![Installer Akkoma avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=akkoma)
 
 *[Read this readme in english.](./README.md)*
 
-> *Ce package vous permet d'installer Akkoma rapidement et simplement sur un serveur YunoHost.
-Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l'installer et en profiter.*
+> *Ce package vous permet d’installer Akkoma rapidement et simplement sur un serveur YunoHost.
+Si vous n’avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l’installer et en profiter.*
 
-## Vue d'ensemble
+## Vue d’ensemble
 
 Akkoma is a microblogging server software that can federate (= exchange messages with) other servers that support ActivityPub. What that means is that you can host a server for yourself or your friends and stay in control of your online identity, but still exchange messages with people on larger servers. Akkoma will federate with all servers that implement ActivityPub, like Friendica, GNU Social, Hubzilla, Mastodon, Misskey, Pleroma, Peertube, and Pixelfed.
 
@@ -25,9 +25,9 @@ Akkoma is a microblogging server software that can federate (= exchange messages
 
 **Démo :** https://otp.akkoma.dev
 
-## Captures d'écran
+## Captures d’écran
 
-![Capture d'écran de Akkoma](./doc/screenshots/screenshot1.png)
+![Capture d’écran de Akkoma](./doc/screenshots/screenshot1.png)
 
 ## Avertissements / informations importantes
 
@@ -71,9 +71,9 @@ You can make users **moderators**. They will then be able to **delete any post**
 
 ## Documentations et ressources
 
-* Site officiel de l'app : <https://akkoma.social/>
-* Documentation officielle de l'admin : <https://docs.akkoma.dev/stable/>
-* Dépôt de code officiel de l'app : <https://akkoma.dev/AkkomaGang/akkoma/>
+* Site officiel de l’app : <https://akkoma.social/>
+* Documentation officielle de l’admin : <https://docs.akkoma.dev/stable/>
+* Dépôt de code officiel de l’app : <https://akkoma.dev/AkkomaGang/akkoma/>
 * Documentation YunoHost pour cette app : <https://yunohost.org/app_akkoma>
 * Signaler un bug : <https://github.com/YunoHost-Apps/akkoma_ynh/issues>
 
@@ -89,4 +89,4 @@ ou
 sudo yunohost app upgrade akkoma -u https://github.com/YunoHost-Apps/akkoma_ynh/tree/testing --debug
 ```
 
-**Plus d'infos sur le packaging d'applications :** <https://yunohost.org/packaging_apps>
+**Plus d’infos sur le packaging d’applications :** <https://yunohost.org/packaging_apps>
