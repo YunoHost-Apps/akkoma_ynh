@@ -4,6 +4,7 @@
 - Require a valid **certificate** installed on the domain. Yunohost can install **Letsencrypt certificate** on the domain from admin web-interface or through command-line.
 - This package is currently set to **single-instance** that means you can run only a _single Akkoma instance_ on a single server.
 - LDAP supported but HTTP auth not.
+- You can normaly _upgrade a Pleroma instance_ to Akkoma... but not with Pleroma on Yunohost (work in progress).
 
 ## Bugs
 
