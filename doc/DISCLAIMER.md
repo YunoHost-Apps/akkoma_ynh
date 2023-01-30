@@ -1,14 +1,15 @@
 ## Limitations
 
-- **Akkoma** require a dedicated **root domain**, eg. akkoma.domain.tld
-- **Akkoma** require a valid **certificate** installed on the domain. Yunohost can **install Letsencrypt certificate** on the domain from **admin web-interface** or through **command-line**.
-- This package is currently set to **single-instance** that means you can run a **single Akkoma instance** on a **single server**.
+- Require a dedicated **root domain**, eg. `akkoma.domain.tld`
+- Require a valid **certificate** installed on the domain. Yunohost can install **Letsencrypt certificate** on the domain from admin web-interface or through command-line.
+- This package is currently set to **single-instance** that means you can run only a _single Akkoma instance_ on a single server.
 - LDAP supported but HTTP auth not.
 
 ## Bugs
 
-**Login fails if password contains special characters**  
-See [#4](https://github.com/YunoHost-Apps/akkoma_ynh/issues/4) for more explaination.
+- **Login fails** if password contains special characters. See [#4](https://github.com/YunoHost-Apps/akkoma_ynh/issues/4) for more explanation.
+- **Login fails** for non YNH users if LDAP is activated (this is by default). See [#15](https://github.com/YunoHost-Apps/akkoma_ynh/issues/15) for more explanation.
+- No way to **change user password** from admin interface. May be related to previous bug. Work like charm from CLI.
 
 
 ## Customization
@@ -18,28 +19,31 @@ This application come with the default frontend (Pleroma FE) and admin interface
 **Mastodon frontend:** if you installed the Mastodon FE package (from CLI or Admin interface) you can have access to an alternate user interface, similar the Mastodons or Glitch frontend. This frontend live alongside the default Pleroma FE: to access just add `/web` at the end of your instance domain (eg. `akkoma.domain.tld/web`). 
 
 ## Admin Tasks
-Go to **cd /var/www/akkoma/live**.
+
+Connect with SSH to your Yunohost as YNH admin user. 
+For the commands syntax, have in mind the specificities of [Yunohost Akkoma install](./yunohost.md).
 
 ### Adding users
 
-**Run:**
-
-    $ ( cd /var/www/akkoma/live && sudo -u akkoma MIX_ENV=prod ./bin/pleroma_ctl user new <NICKNAME> <EMAIL> )
+```
+sudo su akkoma -s $SHELL -lc "/var/www/akkoma/live/bin/pleroma_ctl user new <userName> <userEmail>"
+```
 
 ### Password reset
 
-**Run:**
-
-    $ ( cd /var/www/akkoma/live && sudo -u akkoma MIX_ENV=prod ./bin/pleroma_ctl user reset_password <NICKNAME> )
+```
+sudo su akkoma -s $SHELL -lc "/var/www/akkoma/live/bin/pleroma_ctl user reset_password <userName>"
+```
 
 This will generate a **password reset link** that you can then send to the user.
 
 ### Moderators
 
-You can make users **moderators**. They will then be able to **delete any post**.
+You can make users **moderators**. They will then be able to _delete any post_.
 
-**Run:**
 
-    $ ( cd /var/www/akkoma/live && sudo -u akkoma MIX_ENV=prod ./bin/pleroma_ctl user set <NICKNAME> --[no-]admin )
+```
+sudo su akkoma -s $SHELL -lc "/var/www/akkoma/live/bin/pleroma_ctl user set <userName> --admin"
+```
 
-**--admin** option will **make the user moderator** and **--no-admin** will **take away the moderator privileges** from the user.
+Note: `--admin` option will _make the user moderator_ and `--no-admin` will _take away_ the moderator privileges from the user.
