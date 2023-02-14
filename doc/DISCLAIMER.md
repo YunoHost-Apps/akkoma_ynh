@@ -17,7 +17,15 @@
 
 This application come with the default frontend (Pleroma FE) and admin interface pre-installed and activated. There is also the Mangane front-end who is installed but not active. Note that you can choose other _alternative public interfaces_  (Brutaldon, Fedi FE...) or even provide a custom one.
 
-**Mastodon frontend:** if you installed the Mastodon FE package (from CLI or Admin interface) you can have access to an alternate user interface, similar the Mastodons or Glitch frontend. This frontend live alongside the default Pleroma FE: to access just add `/web` at the end of your instance domain (eg. `akkoma.domain.tld/web`). 
+**Mastodon frontend:** if you installed the Mastodon FE package (from CLI or Admin interface) you can have access to an alternate user interface, similar the Mastodons or Glitch frontend. This frontend live alongside the default Pleroma FE: to access just add `/web` at the end of your instance domain (eg. `akkoma.domain.tld/web`).
+
+### Custom theme
+
+You can eitheir create your custom theme or use [existing ones](https://docs.akkoma.dev/stable/configuration/howto_theming_your_instance/#get-an-existing-theme).
+To add custom themes, you will have to upload them to your instance dedicated folder (`/home/yunohost.app/akkoma/static/themes/` in Yunohost case), then to edit `/home/yunohost.app/akkoma/static/styles.json` to add a new entry referencing it. See the [official documentation](https://docs.akkoma.dev/stable/configuration/howto_theming_your_instance/#adding-the-custom-theme-to-the-instance) for more details.
+- Upload your custom theme, place it in `/home/yunohost.app/akkoma/static/themes/` (you could also directly edit the file from the command line and copy-paste the content).
+- Make sure the file access rights are approriate (only akkoma user can access them) `sudo chown -R akkoma:akkoma /home/yunohost.app/akkoma/static/themes/` (= own by akkoma) and `sudo chmod 750 /home/yunohost.app/akkoma/static/themes/` (=only akkoma can read and edit the file).
+- Then edit `/home/yunohost.app/akkoma/static/styles.json` for instance with `sudo su akkoma nano /home/yunohost.app/akkoma/static/styles.json`.
 
 ## Admin Tasks
 
