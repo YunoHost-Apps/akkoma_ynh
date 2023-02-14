@@ -154,6 +154,7 @@ mkdir -p "$datadir/uploads/"
 mkdir -p "$datadir/static/"
 mkdir -p "$datadir/static/emoji/"
 mkdir -p "$datadir/static/static/themes"
+mv ../conf/styles.json "$datadir/static/styles.json"
 
 chmod 750 "$datadir"
 chmod -R o-rwx "$datadir"
