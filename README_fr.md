@@ -43,6 +43,24 @@ Akkoma is a microblogging server software that can federate (= exchange messages
 - **Login fails** for non YNH users if LDAP is activated (this is by default). See [#15](https://github.com/YunoHost-Apps/akkoma_ynh/issues/15) for more explanation.
 - No way to **change user password** from admin interface. May be related to previous bug. Work like charm from CLI.
 
+## Backups
+
+This application uses the [core-only feature of the backup](https://yunohost.org/en/backup/include_exclude_files#do-not-backup-large-amoun). **This means the app data directory** (`/home/yunohost.app/akkoma`, with subfolder `/static/`, which contains terms of service, custom emoji, custom themes, and `/uploads/` which contains the media attachements) **is not saved during backup**.
+Also to keep the integrity of the data and to have a better guarantee of the restoration it is recommended to stop Akkoma during the operation. Proceed as follows:
+- Stop Akkoma service with this command: `service akkoma stop`
+- Launch Akkoma backup with this command: `yunohost backup create --apps akkoma`
+- Backup Akkoma data directory with your specific strategy (could be with rsync, borg backup or just cp). The data is generally stored in `/home/yunohost.app/akkoma`.
+- Restart Akkoma service with this command: `service akkoma start`
+
+**If you want to create a Yunohost backup that contains also Akkoma data directory**, you should add `BACKUP_CORE_ONLY=0` at the start fo the command : `BACKUP_CORE_ONLY=0 yunohost backup create --app akkoma`.
+
+## Remove
+
+Due of the backup core only feature **the data directory in `/home/yunohost.app/akkoma` is not removed**. 
+If you want to delete the data folder `/home/yunohost.app/akkoma/` during removal of akkoma, you should add the `--purge` option. If you don't, it must be manually deleted to purge user data.
+**This is a necessary step for complete removal** - and possibly a fresh install.
+
+*NB: don't forget this mean those data are* not *backed up by default. See above.*
 
 ## Customization
 
