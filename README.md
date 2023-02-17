@@ -5,7 +5,8 @@ It shall NOT be edited by hand.
 
 # Akkoma for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/akkoma.svg)](https://dash.yunohost.org/appci/app/akkoma) ![Working status](https://ci-apps.yunohost.org/ci/badges/akkoma.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/akkoma.maintain.svg)  
+[![Integration level](https://dash.yunohost.org/integration/akkoma.svg)](https://dash.yunohost.org/appci/app/akkoma) ![Working status](https://ci-apps.yunohost.org/ci/badges/akkoma.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/akkoma.maintain.svg)
+
 [![Install Akkoma with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=akkoma)
 
 *[Lire ce readme en français.](./README_fr.md)*
@@ -15,13 +16,10 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 
 ## Overview
 
-Akkoma is a microblogging server software that can federate (= exchange messages with) other servers that support ActivityPub. What that means is that you can host a server for yourself or your friends and stay in control of your online identity, but still exchange messages with people on larger servers. Akkoma will federate with all servers that implement ActivityPub, like Friendica, GNU Social, Hubzilla, Mastodon, Misskey, Pleroma, Peertube, and Pixelfed.
-
-**Mastodon web front-end for Akkoma:** Add **/web** in front of your Akkoma domain, eg. akkoma.domain.tld/web
+Akkoma is a microblogging server software that can federate (= exchange messages with) other servers that support ActivityPub. What that means is that you can host a server for yourself or your friends and stay in control of your online identity, but still exchange messages with people on larger decentrilized and federated network. Akkoma will federate with all servers that implement ActivityPub, like Friendica, GNU Social, Hubzilla, Mastodon, Misskey, Pleroma, Peertube, or Pixelfed.
 
 
-
-**Shipped version:** 3.5.0~ynh3
+**Shipped version:** 3.6.0~ynh1
 
 **Demo:** https://otp.akkoma.dev
 
@@ -31,43 +29,64 @@ Akkoma is a microblogging server software that can federate (= exchange messages
 
 ## Disclaimers / important information
 
-## Login fails if password contains special characters
-
-See [#4](https://github.com/YunoHost-Apps/akkoma_ynh/issues/4) for more explaination.
-
 ## Limitations
 
-- **Akkoma** require a dedicated **root domain**, eg. akkoma.domain.tld
-- **Akkoma** require a valid **certificate** installed on the domain. Yunohost can **install Letsencrypt certificate** on the domain from **admin web-interface** or through **command-line**.
-- This package is currently set to **single-instance** that means you can run a **single Akkoma instance** on a **single server**.
+- Require a dedicated **root domain**, eg. `akkoma.domain.tld`
+- Require a valid **certificate** installed on the domain. Yunohost can install **Letsencrypt certificate** on the domain from admin web-interface or through command-line.
+- This package is currently set to **single-instance** that means you can run only a _single Akkoma instance_ on a single server.
 - LDAP supported but HTTP auth not.
+- You can normaly _upgrade a Pleroma instance_ to Akkoma... but not with Pleroma on Yunohost (work in progress).
+
+## Bugs
+
+- **Login fails** if password contains special characters. See [#4](https://github.com/YunoHost-Apps/akkoma_ynh/issues/4) for more explanation.
+- **Login fails** for non YNH users if LDAP is activated (this is by default). See [#15](https://github.com/YunoHost-Apps/akkoma_ynh/issues/15) for more explanation.
+- No way to **change user password** from admin interface. May be related to previous bug. Work like charm from CLI.
+
+
+## Customization
+
+This application come with the default frontend (Pleroma FE) and admin interface pre-installed and activated. There is also the Mangane front-end who is installed but not active. Note that you can choose other _alternative public interfaces_  (Brutaldon, Fedi FE...) or even provide a custom one.
+
+**Mastodon frontend:** if you installed the Mastodon FE package (from CLI or Admin interface) you can have access to an alternate user interface, similar the Mastodons or Glitch frontend. This frontend live alongside the default Pleroma FE: to access just add `/web` at the end of your instance domain (eg. `akkoma.domain.tld/web`). 
+
+### Uploaded files size
+By default, the web server [NGINX is configured](https://github.com/YunoHost-Apps/akkoma_ynh/blob/testing/conf/nginx.conf#L12) with a maximum value for uploading files at 50 MB. You can change the value only in akkoma under this limit. To go higher, you also need to change NGINX value on `/etc/nginx/conf.d/my.domain.tld.d/akkoma.conf` : change `client_max_body_size 50M;` value in order to do so.
+
+Don't forget to reload NGINX `sudo service nginx reload` settings and possibly restart Akkoma `sudo service akkoma restart` for the changes to take effects.
+
+*NB: These settings are restored to the default configuration when updating Akkoma. Remember to restore your configuration after all updates. This should be improved in the future:tm:*
+
 
 ## Admin Tasks
-Go to **cd /var/www/akkoma/live**.
+
+Connect with SSH to your Yunohost as YNH admin user. 
+For the commands syntax, have in mind the specificities of [Yunohost Akkoma install](./yunohost.md).
 
 ### Adding users
 
-**Run:**
-
-    $ ( cd /var/www/akkoma/live && sudo -u akkoma MIX_ENV=prod ./bin/pleroma_ctl user new <NICKNAME> <EMAIL> )
+```
+sudo su akkoma -s $SHELL -lc "/var/www/akkoma/live/bin/pleroma_ctl user new <userName> <userEmail>"
+```
 
 ### Password reset
 
-**Run:**
-
-    $ ( cd /var/www/akkoma/live && sudo -u akkoma MIX_ENV=prod ./bin/pleroma_ctl user reset_password <NICKNAME> )
+```
+sudo su akkoma -s $SHELL -lc "/var/www/akkoma/live/bin/pleroma_ctl user reset_password <userName>"
+```
 
 This will generate a **password reset link** that you can then send to the user.
 
 ### Moderators
 
-You can make users **moderators**. They will then be able to **delete any post**.
+You can make users **moderators**. They will then be able to _delete any post_.
 
-**Run:**
 
-    $ ( cd /var/www/akkoma/live && sudo -u akkoma MIX_ENV=prod ./bin/pleroma_ctl user set <NICKNAME> --[no-]admin )
+```
+sudo su akkoma -s $SHELL -lc "/var/www/akkoma/live/bin/pleroma_ctl user set <userName> --admin"
+```
 
-**--admin** option will **make the user moderator** and **--no-admin** will **take away the moderator privileges** from the user.
+Note: `--admin` option will _make the user moderator_ and `--no-admin` will _take away_ the moderator privileges from the user.
 
 ## Documentation and resources
 
