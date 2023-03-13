@@ -48,6 +48,7 @@ ynh_backup --src_path="$final_path"
 # BACKUP THE DATA DIR
 #=================================================
 
+# When using BACKUP_CORE_ONLY (default), this folder will not be saved. This saves a lot of space and time, in particular during upgrades.
 ynh_backup --src_path="$datadir" --is_big
 
 #=================================================
