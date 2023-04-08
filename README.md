@@ -52,7 +52,7 @@ Also to keep the integrity of the data and to have a better guarantee of the res
 - Backup Akkoma data directory with your specific strategy (could be with rsync, borg backup or just cp). The data is generally stored in `/home/yunohost.app/akkoma`.
 - Restart Akkoma service with this command: `service akkoma start`
 
-**If you want to create a Yunohost backup that contains also Akkoma data directory**, you should add `BACKUP_CORE_ONLY=0` at the start fo the command : `BACKUP_CORE_ONLY=0 yunohost backup create --app akkoma`.
+**If you want to create a Yunohost backup that contains also Akkoma data directory**, you should add `BACKUP_CORE_ONLY=0` at the start fo the command : `BACKUP_CORE_ONLY=0 yunohost backup create --apps akkoma`.
 
 ## Remove
 
@@ -64,7 +64,8 @@ If you want to delete the data folder `/home/yunohost.app/akkoma/` during remova
 
 ## Customization
 
-This application come with the default frontend (Pleroma FE) and admin interface pre-installed and activated. There is also the Mangane front-end who is installed but not active. Note that you can choose other _alternative public interfaces_  (Brutaldon, Fedi FE...) or even provide a custom one.
+This application come with the default frontend (Pleroma FE) and admin interface pre-installed and activated. There is also the Mangane front-end who is installed but not actived. Mangane is likely to be activated by default in the future.
+Note that you can choose other _alternative public interfaces_  (Brutaldon, Fedi FE...) or even provide a custom one.
 
 **Mastodon frontend:** if you installed the Mastodon FE package (from CLI or Admin interface) you can have access to an alternate user interface, similar the Mastodons or Glitch frontend. This frontend live alongside the default Pleroma FE: to access just add `/web` at the end of your instance domain (eg. `akkoma.domain.tld/web`).
 
