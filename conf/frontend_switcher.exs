@@ -1,3 +1,5 @@
-config :pleroma, :frontends, :pickable 
-  "pleroma-fe/stable",
-  "mangane/dist"
+config :pleroma, :frontends,
+  pickable: [
+    "pleroma-fe/stable",
+    "mangane/dist"
+  ]
