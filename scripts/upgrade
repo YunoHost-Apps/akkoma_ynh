@@ -196,6 +196,16 @@ if ynh_version_gt "2.4.4~ynh2" "${previous_version}"; then
 	ynh_replace_string --match_string='registrations_open: true' --replace_string="registrations_open: $registration_bool_value" --target_file="$config"
 fi
 
+# Add frontend switcher if needed
+
+if grep -q ':pleroma, :frontends, :pickable' $config # This is not resilient to any spacing change, to be refined
+then
+    ynh_script_progression --message="Frontend switcher config already existing, nothing to do about it." --weight=0
+else
+    ynh_script_progression --message="Adding frontend switcher config." --weight=0
+    cat "../conf/frontend_switcher.exs" >> "$config"
+fi
+
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
