@@ -293,6 +293,27 @@ ynh_script_progression --message="Starting a systemd service..." --weight=1
 ynh_systemd_action --service_name=$app --action="start" --log_path=systemd --line_match="Access akkoma.Web.Endpoint"
 
 #=================================================
+# INSTALL BASIC FRONTENDS (Upgrade them)
+#=================================================
+#### Fontends need Akkoma to be already running, so they are installed at the very end
+
+# Pleroma Front-End
+ynh_script_progression --message="Upgrading Pleroma FrontEnd..." --weight=1
+ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$final_path/live/bin/pleroma_ctl frontend install pleroma-fe --ref stable"
+
+# Admin Front-End
+ynh_script_progression --message="Upgrading Admin FrontEnd..." --weight=1
+ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$final_path/live/bin/pleroma_ctl frontend install admin-fe --ref stable"
+
+#=================================================
+# INSTALL MANGANE FRONTEND (Upgrade it)
+#=================================================
+# Mangane alternative Front-End will be built in, ready to enable
+ynh_script_progression --message="Upgrading Mangane FrontEnd..." --weight=1
+ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$final_path/live/bin/pleroma_ctl frontend install mangane --ref dist --build-url https://github.com/BDX-town/Mangane/releases/latest/download/static.zip"
+# Not activated, users need to change the "primary" frontend in the admin UI (use 'mangane' and 'dist').
+
+#=================================================
 # RELOAD NGINX
 #=================================================
 ynh_script_progression --message="Reloading NGINX web server..." --weight=1
