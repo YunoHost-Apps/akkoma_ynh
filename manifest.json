@@ -6,7 +6,7 @@
         "en": "Federated social networking server built on ActivityPub open protocol",
         "fr": "Serveur de réseautage social fédéré basé sur le protocole ouvert ActivityPub"
     },
-    "version": "3.9.0~ynh1",
+    "version": "3.9.2~ynh1",
     "url": "https://akkoma.social/",
     "upstream": {
         "license": "AGPL-3.0-only",
