@@ -1,6 +1,0 @@
-SOURCE_URL=https://akkoma-updates.s3-website.fr-par.scw.cloud/stable/akkoma-amd64.zip
-SOURCE_SUM=53acaecf82283d724c7c64b403b8130d22cbe050f6c224f55f73a158da2c52fe
-SOURCE_SUM_PRG=sha256sum
-SOURCE_FORMAT=zip
-SOURCE_IN_SUBDIR=true
-SOURCE_FILENAME=
