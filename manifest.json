@@ -6,7 +6,7 @@
         "en": "Federated social networking server built on ActivityPub open protocol",
         "fr": "Serveur de réseautage social fédéré basé sur le protocole ouvert ActivityPub"
     },
-    "version": "3.10.3~ynh1",
+    "version": "3.10.4~ynh1",
     "url": "https://akkoma.social/",
     "upstream": {
         "license": "AGPL-3.0-only",
@@ -22,7 +22,7 @@
         }
     ],
     "requirements": {
-        "yunohost": ">= 11.0"
+        "yunohost": ">= 11.2"
     },
     "multi_instance": false,
     "services": [
@@ -77,7 +77,7 @@
             },
             {
                 "name": "size",
-                "type": "string",
+                "type": "select",
                 "ask": {
                     "en": "Select the media-cache size (in GB). If you did not enabled media-cache in above option then this option will have no effect.",
                     "fr": "Sélectionner la taille du cache média (en Go). Si vous n'avez pas activé le cache média ci-dessus, cette option n'aura aucun effet."
@@ -87,8 +87,10 @@
                     "2g",
                     "5g",
                     "10g",
+                    "15g",
                     "20g",
                     "40g",
+                    "60g",
                     "80g",
                     "150g"
                 ],
