@@ -119,7 +119,7 @@ Note: `--admin` option will _make the user moderator_ and `--no-admin` will _tak
 * Official app website: <https://akkoma.social/>
 * Official admin documentation: <https://docs.akkoma.dev/stable/>
 * Upstream app code repository: <https://akkoma.dev/AkkomaGang/akkoma/>
-* YunoHost documentation for this app: <https://yunohost.org/app_akkoma>
+* YunoHost Store: <https://apps.yunohost.org/app/akkoma>
 * Report a bug: <https://github.com/YunoHost-Apps/akkoma_ynh/issues>
 
 ## Developer info
