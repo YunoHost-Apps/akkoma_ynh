@@ -29,6 +29,15 @@ Akkoma is a microblogging server software that can federate (= exchange messages
 
 ## Avertissements / informations importantes
 
+## Package is broken
+
+*Akkoma doesn't seem to be compatible with Debian 11 anymore.*
+To fix this, **we need akkoma/tech-savy people to help fixing the dependency issues, or to build a Debian 11 version of the latest release.**
+Until further improvements, **consider this package broken**. Once Yunohost is compatible with Debian 12, this might be solved.
+You can't install it, nor upgrade it. Security fixes are not released.
+
+If you would like to install the app, *please don't*, and install [Pleroma](https://github.com/YunoHost-Apps/pleroma_ynh/) instead. In the future, you will be able to migrate your Pleroma instance to Akkoma.
+
 ## Limitations
 
 - Require a dedicated **root domain**, eg. `akkoma.domain.tld`
