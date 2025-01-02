@@ -1,33 +1,33 @@
 <!--
-Nota bene : ce README est automatiquement généré par <https://github.com/YunoHost/apps/tree/master/tools/readme_generator>
-Il NE doit PAS être modifié à la main.
+Este archivo README esta generado automaticamente<https://github.com/YunoHost/apps/tree/master/tools/readme_generator>
+No se debe editar a mano.
 -->
 
-# Akkoma pour YunoHost
+# Akkoma para Yunohost
 
-[![Niveau d’intégration](https://dash.yunohost.org/integration/akkoma.svg)](https://dash.yunohost.org/appci/app/akkoma) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/akkoma.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/akkoma.maintain.svg)
+[![Nivel de integración](https://dash.yunohost.org/integration/akkoma.svg)](https://dash.yunohost.org/appci/app/akkoma) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/akkoma.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/akkoma.maintain.svg)
 
-[![Installer Akkoma avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=akkoma)
+[![Instalar Akkoma con Yunhost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=akkoma)
 
-*[Lire le README dans d'autres langues.](./ALL_README.md)*
+*[Leer este README en otros idiomas.](./ALL_README.md)*
 
-> *Ce package vous permet d’installer Akkoma rapidement et simplement sur un serveur YunoHost.*  
-> *Si vous n’avez pas YunoHost, consultez [ce guide](https://yunohost.org/install) pour savoir comment l’installer et en profiter.*
+> *Este paquete le permite instalarAkkoma rapidamente y simplement en un servidor YunoHost.*  
+> *Si no tiene YunoHost, visita [the guide](https://yunohost.org/install) para aprender como instalarla.*
 
-## Vue d’ensemble
+## Descripción general
 
 Akkoma is a microblogging server software that can federate (= exchange messages with) other servers that support ActivityPub. What that means is that you can host a server for yourself or your friends and stay in control of your online identity, but still exchange messages with people on larger decentrilized and federated network. Akkoma will federate with all servers that implement ActivityPub, like Friendica, GNU Social, Hubzilla, Mastodon, Misskey, Pleroma, Peertube, or Pixelfed.
 
 
-**Version incluse :** 3.13.3~ynh1
+**Versión actual:** 3.10.3~ynh1
 
-**Démo :** <https://otp.akkoma.dev>
+**Demo:** <https://otp.akkoma.dev>
 
-## Captures d’écran
+## Capturas
 
-![Capture d’écran de Akkoma](./doc/screenshots/screenshot1.png)
+![Captura de Akkoma](./doc/screenshots/screenshot1.png)
 
-## Avertissements / informations importantes
+## informaciones importantes
 
 ## Package is broken
 
@@ -125,24 +125,24 @@ sudo su akkoma -s $SHELL -lc "/var/www/akkoma/live/bin/pleroma_ctl user set <use
 
 Note: `--admin` option will _make the user moderator_ and `--no-admin` will _take away_ the moderator privileges from the user.
 
-## Documentations et ressources
+## Documentaciones y recursos
 
-- Site officiel de l’app : <https://akkoma.social/>
-- Documentation officielle de l’admin : <https://docs.akkoma.dev/stable/>
-- Dépôt de code officiel de l’app : <https://akkoma.dev/AkkomaGang/akkoma/>
-- YunoHost Store : <https://apps.yunohost.org/app/akkoma>
-- Signaler un bug : <https://github.com/YunoHost-Apps/akkoma_ynh/issues>
+- Sitio web oficial: <https://akkoma.social/>
+- Documentación administrador oficial: <https://docs.akkoma.dev/stable/>
+- Repositorio del código fuente oficial de la aplicación : <https://akkoma.dev/AkkomaGang/akkoma/>
+- Catálogo YunoHost: <https://apps.yunohost.org/app/akkoma>
+- Reportar un error: <https://github.com/YunoHost-Apps/akkoma_ynh/issues>
 
-## Informations pour les développeurs
+## Información para desarrolladores
 
-Merci de faire vos pull request sur la [branche `testing`](https://github.com/YunoHost-Apps/akkoma_ynh/tree/testing).
+Por favor enviar sus correcciones a la [`branch testing`](https://github.com/YunoHost-Apps/akkoma_ynh/tree/testing
 
-Pour essayer la branche `testing`, procédez comme suit :
+Para probar la rama `testing`, sigue asÍ:
 
 ```bash
 sudo yunohost app install https://github.com/YunoHost-Apps/akkoma_ynh/tree/testing --debug
-ou
+o
 sudo yunohost app upgrade akkoma -u https://github.com/YunoHost-Apps/akkoma_ynh/tree/testing --debug
 ```
 
-**Plus d’infos sur le packaging d’applications :** <https://yunohost.org/packaging_apps>
+**Mas informaciones sobre el empaquetado de aplicaciones:** <https://yunohost.org/packaging_apps>
