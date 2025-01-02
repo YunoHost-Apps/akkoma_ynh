@@ -1,5 +1,5 @@
-SOURCE_URL=https://akkoma-updates.s3-website.fr-par.scw.cloud/stable/akkoma-amd64-debian-bullseye.zip
-SOURCE_SUM=074e4c07c5f9063e7d6b992b9524124968d82685856bc38326ee517a84c84c82
+SOURCE_URL=https://akkoma-updates.s3-website.fr-par.scw.cloud/stable/akkoma-amd64.zip
+SOURCE_SUM=146b148be0e71482e7614246b8a0c563a5c45ed6581e20f70035b3e3a2377ba2
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=zip
 SOURCE_IN_SUBDIR=true
