@@ -19,7 +19,7 @@ Il NE doit PAS être modifié à la main.
 Akkoma is a microblogging server software that can federate (= exchange messages with) other servers that support ActivityPub. What that means is that you can host a server for yourself or your friends and stay in control of your online identity, but still exchange messages with people on larger decentrilized and federated network. Akkoma will federate with all servers that implement ActivityPub, like Friendica, GNU Social, Hubzilla, Mastodon, Misskey, Pleroma, Peertube, or Pixelfed.
 
 
-**Version incluse :** 3.10.3~ynh1
+**Version incluse :** 3.13.3~ynh1
 
 **Démo :** <https://otp.akkoma.dev>
 
