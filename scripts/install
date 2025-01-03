@@ -13,25 +13,17 @@ source /usr/share/yunohost/helpers
 # MANAGE SCRIPT FAILURE
 #=================================================
 
-#REMOVEME? ynh_clean_setup () {
+ynh_clean_setup () { #REMOVEME?
 	true
 }
 # Exit if an error occurs during the execution of the script
-#REMOVEME? ynh_abort_if_errors
+ynh_abort_if_errors #REMOVEME?
 
 #=================================================
 # RETRIEVE ARGUMENTS FROM THE MANIFEST
 #=================================================
 
-#REMOVEME? domain=$YNH_APP_ARG_DOMAIN
 path="/"
-#REMOVEME? is_public=$YNH_APP_ARG_IS_PUBLIC
-#REMOVEME? admin=$YNH_APP_ARG_ADMIN
-#REMOVEME? password=$YNH_APP_ARG_PASSWORD
-#REMOVEME? name="${YNH_APP_ARG_NAME// /_}"
-#REMOVEME? registration=$YNH_APP_ARG_REGISTRATION
-#REMOVEME? cache=$YNH_APP_ARG_CACHE
-#REMOVEME? size=$YNH_APP_ARG_SIZE
 random_key=$(ynh_string_random --length=64)
 signing_salt=$(ynh_string_random --length=8)
 admin_email=$(ynh_user_get_info --username=$admin --key="mail")
@@ -41,12 +33,10 @@ if [ ${PACKAGE_CHECK_EXEC:-0} -eq 1 ]; then
 	admin="test"
 fi
 
-#REMOVEME? app=$YNH_APP_INSTANCE_NAME
-
 #=================================================
 # CHECK IF THE APP CAN BE INSTALLED WITH THESE ARGS
 #=================================================
-#REMOVEME? ynh_script_progression --message="Validating installation parameters..." --weight=1
+ynh_script_progression --message="Validating installation parameters..." --weight=1
 
 #REMOVEME? install_dir=/var/www/$app
 #REMOVEME? test ! -e "$install_dir" || ynh_die --message="This path already contains a folder"
@@ -75,11 +65,11 @@ ynh_app_setting_set --app=$app --key=signing_salt --value=$signing_salt
 #=================================================
 # FIND AND OPEN A PORT
 #=================================================
-#REMOVEME? ynh_script_progression --message="Finding an available port..." --weight=1
+ynh_script_progression --message="Finding an available port..." --weight=1
 
 # Find an available port
-#REMOVEME? port=$(ynh_find_port --port=8095)
-#REMOVEME? ynh_app_setting_set --app=$app --key=port --value=$port
+port=$(ynh_find_port --port=8095)
+ynh_app_setting_set --app=$app --key=port --value=$port
 
 #=================================================
 # INSTALL DEPENDENCIES
@@ -268,18 +258,18 @@ ynh_systemd_action --service_name=$app --action="start" --log_path=systemd --lin
 #=================================================
 #REMOVEME? ynh_script_progression --message="Configuring permissions..." --weight=1
 
-# Make app public if necessary
-#REMOVEME? if [ $is_public -eq 1 ]
+# Make app public if necessary 
+if [ $is_public -eq 1 ] #REMOVEME?
 then
 	# Everyone can access the app.
 	# The "main" permission is automatically created before the install script.
-#REMOVEME? 	ynh_permission_update --permission="main" --add="visitors"
+ynh_permission_update --permission="main" --add="visitors"
 fi
 
 # Everyone can access to the api part
 # We don't want to display the tile in the sso so we put --show_tile="false"
 # And we don't want that the YunoHost Admin can remove visitors group to this permission, so we put --protected="true"
-#REMOVEME? ynh_permission_create --permission="api" --url="/api" --allowed="visitors" --auth_header="false" --show_tile="false" --protected="true"
+ynh_permission_create --permission="api" --url="/api" --allowed="visitors" --auth_header="false" --show_tile="false" --protected="true" #REMOVEME?
 
 #=================================================
 # RELOAD NGINX
