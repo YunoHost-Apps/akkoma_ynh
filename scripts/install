@@ -42,7 +42,7 @@ ynh_script_progression --message="Validating installation parameters..." --weigh
 #REMOVEME? ynh_app_setting_set --app=$app --key=domain --value=$domain
 #REMOVEME? ynh_app_setting_set --app=$app --key=path --value=$path
 #REMOVEME? ynh_app_setting_set --app=$app --key=admin --value=$admin
-ynh_app_setting_set --app=$app --key=name --value=$name
+ynh_app_setting_set --app=$app --key=instance_name --value=$instance_name
 ynh_app_setting_set --app=$app --key=registration --value=$registration
 ynh_app_setting_set --app=$app --key=cache --value=$cache
 ynh_app_setting_set --app=$app --key=size --value=$size
