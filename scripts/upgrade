@@ -52,20 +52,6 @@ abort_if_up_to_date
 previous_version="${version}"
 
 #=================================================
-# BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
-#=================================================
-#REMOVEME? ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --weight=1
-
-# Backup the current version of the app
-#REMOVEME? ynh_backup_before_upgrade
-#REMOVEME? ynh_clean_setup () {
-	# Restore it if the upgrade fails
-#REMOVEME? 	ynh_restore_upgradebackup
-}
-# Exit if an error occurs during the execution of the script
-#REMOVEME? ynh_abort_if_errors
-
-#=================================================
 # STANDARD UPGRADE STEPS
 #=================================================
 # STOP SYSTEMD SERVICE
@@ -83,44 +69,6 @@ fi
 #=================================================
 ynh_script_progression --message="Ensuring downward compatibility..." --weight=1
 
-# Cleaning legacy permissions
-#REMOVEME? if ynh_legacy_permissions_exists; then
-#REMOVEME? 	ynh_legacy_permissions_delete_all
-
-	ynh_app_setting_delete --app=$app --key=is_public
-fi
-
-# Create a permission if needed
-#REMOVEME? if ! ynh_permission_exists --permission="api"; then
-#REMOVEME? 	ynh_permission_create --permission="api" --url="/api" --allowed="visitors" --auth_header="false" --show_tile="false" --protected="true"
-fi
-
-# If db_name doesn't exist, create it
-if [ -z "$db_name" ]; then
-	db_name=$(ynh_sanitize_dbid --db_name=$app)
-#REMOVEME? 	ynh_app_setting_set --app=$app --key=db_name --value=$db_name
-fi
-
-# If db_user doesn't exist, create it
-if [ -z "$db_user" ]; then
-	db_user=$db_name
-fi
-
-# If db_pwd doesn't exist, create it
-if [ -z "$db_pwd" ]; then
-#REMOVEME? 	db_pwd=$(ynh_app_setting_get --app=$app --key=db_pwd)
-#REMOVEME? 	ynh_app_setting_set --app=$app --key=psqlpwd --value=$db_pwd
-fi
-
-# Switch variables name
-#REMOVEME? psql_db=$(ynh_app_setting_get --app=$app --key=psql_db)
-
-if [ -n "$psql_db" ]
-then
-#REMOVEME? 	db_name=$(ynh_app_setting_get --app=$app --key=psql_db)
-#REMOVEME? 	ynh_app_setting_set --app=$app --key=db_name --value=$db_name
-	ynh_app_setting_delete --app=$app --key=psql_db
-fi
 
 # Close a port
 if yunohost firewall list | grep -q "\- $port$"
@@ -139,24 +87,12 @@ if [ ! -d "$install_dir/live" ]; then
 fi
 
 #=================================================
-# CREATE DEDICATED USER
-#=================================================
-#REMOVEME? ynh_script_progression --message="Making sure dedicated system user exists..." --weight=1
-
-# Create a dedicated user (if not existing)
-#REMOVEME? ynh_system_user_create --username=$app --home_dir="$install_dir"
-
-#=================================================
 # UPGRADE TO OTP RELEASE
 #=================================================
 
 config="/etc/$app/config.exs"
 if ynh_version_gt "1.1.1~ynh1" "${previous_version}" ; then
 	ynh_script_progression --message="Upgrading to OTP release..." --weight=1
-
-	# Define app's data directory
-	data_dir="/home/yunohost.app/${app}"
-#REMOVEME? 	ynh_app_setting_set --app=$app --key=data_dir --value="$data_dir"
 
 	# Create app folders
 	mkdir -p "$data_dir/"
@@ -183,7 +119,7 @@ if ynh_version_gt "1.1.1~ynh1" "${previous_version}" ; then
 
 	ynh_backup_if_checksum_is_different --file="$config"
 
-#REMOVEME? 	ynh_secure_remove --file="$install_dir/live"
+	ynh_secure_remove --file="$install_dir/live"
 fi
 
 if ynh_version_gt "2.0.5~ynh1" "${previous_version}" ; then
@@ -214,7 +150,7 @@ if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
 	ynh_script_progression --message="Upgrading source files..." --weight=1
 
-#REMOVEME? 	ynh_secure_remove --file="$install_dir/live"
+	ynh_secure_remove --file="$install_dir/live"
 	# Download, check integrity, uncompress and patch the source from app.src
 	ynh_setup_source --dest_dir="$install_dir/live" --source_id=$YNH_ARCH
 fi
