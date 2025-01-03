@@ -30,7 +30,6 @@ ram.runtime = "50M" # FIXME: replace with an **estimate** minimum ram requiremen
     [install.domain]
     # this is a generic question - ask strings are automatically handled by Yunohost's core
     type = "domain"
-    full_domain = true
 
     [install.init_main_permission]
     type = "group"
@@ -44,7 +43,7 @@ ram.runtime = "50M" # FIXME: replace with an **estimate** minimum ram requiremen
     # this is a generic question - ask strings are automatically handled by Yunohost's core
     type = "password"
 
-    [install.name]
+    [install.instance_name]
     ask.en = "Choose a name for your Akkoma instance"
     ask.fr = "Choisissez un nom pour votre instance Akkoma"
     type = "string"
@@ -88,7 +87,7 @@ ram.runtime = "50M" # FIXME: replace with an **estimate** minimum ram requiremen
     main.url = "/"
 
     [resources.ports]
-    main.default = 8095
+    main.default = 8095 # FIXME
 
     [resources.apt]
     packages = "curl, unzip, libncurses5, postgresql, postgresql-contrib, imagemagick, ffmpeg, exiftool, libimage-exiftool-perl"
