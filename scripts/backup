@@ -11,27 +11,17 @@ source ../settings/scripts/_common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# MANAGE SCRIPT FAILURE
-#=================================================
-
-ynh_clean_setup () {
-	true
-}
-# Exit if an error occurs during the execution of the script
-ynh_abort_if_errors
-
-#=================================================
 # LOAD SETTINGS
 #=================================================
 ynh_print_info --message="Loading settings..."
 
-app=$YNH_APP_INSTANCE_NAME
+#REMOVEME? app=$YNH_APP_INSTANCE_NAME
 
-final_path=$(ynh_app_setting_get --app=$app --key=final_path)
-domain=$(ynh_app_setting_get --app=$app --key=domain)
-db_name=$(ynh_app_setting_get --app=$app --key=db_name)
-cache=$(ynh_app_setting_get --app=$app --key=cache)
-datadir=$(ynh_app_setting_get --app=$app --key=datadir)
+#REMOVEME? #REMOVEME? install_dir=$(ynh_app_setting_get --app=$app --key=install_dir)
+#REMOVEME? domain=$(ynh_app_setting_get --app=$app --key=domain)
+#REMOVEME? db_name=$(ynh_app_setting_get --app=$app --key=db_name)
+#REMOVEME? cache=$(ynh_app_setting_get --app=$app --key=cache)
+#REMOVEME? data_dir=$(ynh_app_setting_get --app=$app --key=data_dir)
 
 #=================================================
 # DECLARE DATA AND CONF FILES TO BACKUP
@@ -42,14 +32,14 @@ ynh_print_info --message="Declaring files to be backed up..."
 # BACKUP THE APP MAIN DIR
 #=================================================
 
-ynh_backup --src_path="$final_path"
+ynh_backup --src_path="$install_dir"
 
 #=================================================
 # BACKUP THE DATA DIR
 #=================================================
 
 # When using BACKUP_CORE_ONLY (default), this folder will not be saved. This saves a lot of space and time, in particular during upgrades.
-ynh_backup --src_path="$datadir" --is_big
+ynh_backup --src_path="$data_dir" --is_big
 
 #=================================================
 # BACKUP THE NGINX CONFIGURATION
