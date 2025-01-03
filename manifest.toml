@@ -66,7 +66,7 @@ ram.runtime = "50M" # FIXME: replace with an **estimate** minimum ram requiremen
     [install.size]
     ask.en = "Select the media-cache size (in GB). If you did not enabled media-cache in above option then this option will have no effect. This can be tweaked afterwards."
     ask.fr = "Sélectionner la taille du cache média (en Go). Si vous n'avez pas activé le cache média ci-dessus, cette option n'aura aucun effet. Cela peut être ajusté après-coup."
-    type = "string"
+    type = "select"
     choices = ["1g", "2g", "5g", "10g", "20g", "40g", "60g", "100g", "150g"]
     default = "5g"
 
