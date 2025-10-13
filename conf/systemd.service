@@ -19,7 +19,7 @@ Environment="HOME=__INSTALL_DIR__/live/"
 ; Path to the folder containing the Akkoma installation.
 WorkingDirectory=__INSTALL_DIR__/live/
 ; Path to the Pleroma binary. ; It has to be Pleroma not Akkoma
-ExecStart=__INSTALL_DIR__/live/bin/pleroma start
+ExecStart=__INSTALL_DIR__/live/bin/pleroma daemon
 ExecStop=__INSTALL_DIR__/live/bin/pleroma stop
 
 ; Some security directives.
