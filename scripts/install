@@ -86,7 +86,7 @@ ynh_script_progression --message="Setting up source files..." --weight=1
 
 #REMOVEME? ynh_app_setting_set --app=$app --key=install_dir --value=$install_dir
 # Download, check integrity, uncompress and patch the source from app.src
-ynh_setup_source --dest_dir="$install_dir/live"
+ynh_setup_source --dest_dir="$install_dir" #/live
 
 chmod 750 "$install_dir"
 chmod -R o-rwx "$install_dir"
