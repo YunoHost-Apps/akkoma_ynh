@@ -5,7 +5,7 @@ name = "Akkoma"
 description.en = "Federated social networking server built on ActivityPub open protocol"
 description.fr = "Serveur de réseautage social fédéré basé sur le protocole ouvert ActivityPub"
 
-version = "3.10.4~ynh3"
+version = "3.16.0~ynh1"
 
 maintainers = ["Lapineige"]
 
@@ -73,7 +73,7 @@ ram.runtime = "50M" # FIXME: replace with an **estimate** minimum ram requiremen
 
     [resources.sources.main]
     url = "https://akkoma-updates.s3-website.fr-par.scw.cloud/stable/akkoma-amd64.zip"
-    sha256 = "146b148be0e71482e7614246b8a0c563a5c45ed6581e20f70035b3e3a2377ba2"
+    sha256 = "8fca5bea22b0fc1513a052dc0789b040783be1713afb2da210d14d18bfc3ff84"
     # autoupdate.strategy = "latest_github_release" # How to implement this ?
     # autoupdate.asset = ".*\\.zip"
     
