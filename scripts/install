@@ -68,24 +68,12 @@ ynh_app_setting_set --app=$app --key=port --value=$port
 
 #REMOVEME? ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
 
-#=================================================
-# CREATE DEDICATED USER
-#=================================================
-#REMOVEME? ynh_script_progression --message="Configuring system user..." --weight=1
-
-# Create a system user
-#REMOVEME? ynh_system_user_create --username=$app --home_dir="$install_dir"
 
 #=================================================
 # CREATE A POSTGRESQL DATABASE
 #=================================================
 #REMOVEME? ynh_script_progression --message="Creating a PostgreSQL database..." --weight=1
 
-#REMOVEME? db_name=$(ynh_sanitize_dbid --db_name=$app)
-#REMOVEME? db_user=$db_name
-#REMOVEME? ynh_app_setting_set --app=$app --key=db_name --value=$db_name
-#REMOVEME? ynh_psql_test_if_first_run
-#REMOVEME? ynh_psql_setup_db --db_user=$db_user --db_name=$db_name
 ynh_psql_execute_as_root --sql="CREATE EXTENSION IF NOT EXISTS unaccent;" --database=$db_name
 ynh_psql_execute_as_root --sql="CREATE EXTENSION IF NOT EXISTS pg_trgm;" --database=$db_name
 ynh_psql_execute_as_root --sql="CREATE EXTENSION IF NOT EXISTS citext;" --database=$db_name
@@ -145,10 +133,27 @@ chown -R $app:$app "$data_dir"
 #=================================================
 ynh_script_progression --message="Adding a configuration file..." --weight=1
 
-config="/etc/$app/config.exs"
+config_file="/etc/$app/config.exs"
+ynh_app_setting_set --app=$app --key=config_file --value=$config_file
 
 mkdir -p /etc/$app
 chown $app:$app /etc/$app
+
+
+# Run the config generator
+ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$install_dir/bin/pleroma_ctl instance gen --output $config_file --output-psql /tmp/setup_db.psql"
+
+# Create the postgres database
+ynh_exec_as postgres -s $SHELL -lc "psql -f /tmp/setup_db.psql"
+
+# Create the database schema
+ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "./bin/pleroma_ctl instance gen --output $config_file --output-psql /tmp/setup_db.psql"
+
+# Create the postgres database
+su postgres -s $SHELL -lc "psql -f /tmp/setup_db.psql"
+
+# Create the database schema
+ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$install_dir/bin/pleroma_ctl migrate"
 
 #=================================================
 # SETUP SYSTEMD
@@ -166,30 +171,30 @@ ynh_add_systemd_config
 #=================================================
 ynh_script_progression --message="Making setup..." --weight=1
 
-pushd $install_dir/live
-	#Generate instance
-	ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$install_dir/live/bin/pleroma_ctl instance gen --force \
-	--output $config \
-	--output-psql /tmp/setup_db.psql \
-	--domain $domain \
-	--instance-name \"$instance_name\" \
-	--admin-email $admin_email \
-	--notify-email $admin_email \
-	--dbhost localhost \
-	--dbname $db_name \
-	--dbuser $db_user \
-	--dbpass $db_pwd \
-	--rum N \
-	--indexable Y \
-	--db-configurable Y \
-	--uploads-dir $data_dir/uploads \
-	--static-dir $data_dir/static \
-	--listen-ip 127.0.0.1 \
-	--listen-port $port \
-	--strip-uploads Y \
-	--anonymize-uploads Y \
-	--dedupe-uploads Y"
-popd
+#pushd $install_dir/live
+#	#Generate instance
+#	ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$install_dir/live/bin/pleroma_ctl instance gen --force \
+#	--output $config \
+#	--output-psql /tmp/setup_db.psql \
+#	--domain $domain \
+#	--instance-name \"$instance_name\" \
+#	--admin-email $admin_email \
+#	--notify-email $admin_email \
+#	--dbhost localhost \
+#	--dbname $db_name \
+#	--dbuser $db_user \
+#	--dbpass $db_pwd \
+#	--rum N \
+#	--indexable Y \
+#	--db-configurable Y \
+#	--uploads-dir $data_dir/uploads \
+#	--static-dir $data_dir/static \
+#	--listen-ip 127.0.0.1 \
+#	--listen-port $port \
+#	--strip-uploads Y \
+#	--anonymize-uploads Y \
+#	--dedupe-uploads Y"
+#popd
 
 cat "../conf/ldap.exs" >> "$config"
 
