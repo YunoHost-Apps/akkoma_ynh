@@ -68,24 +68,12 @@ ynh_app_setting_set --app=$app --key=port --value=$port
 
 #REMOVEME? ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies
 
-#=================================================
-# CREATE DEDICATED USER
-#=================================================
-#REMOVEME? ynh_script_progression --message="Configuring system user..." --weight=1
-
-# Create a system user
-#REMOVEME? ynh_system_user_create --username=$app --home_dir="$install_dir"
 
 #=================================================
 # CREATE A POSTGRESQL DATABASE
 #=================================================
 #REMOVEME? ynh_script_progression --message="Creating a PostgreSQL database..." --weight=1
 
-#REMOVEME? db_name=$(ynh_sanitize_dbid --db_name=$app)
-#REMOVEME? db_user=$db_name
-#REMOVEME? ynh_app_setting_set --app=$app --key=db_name --value=$db_name
-#REMOVEME? ynh_psql_test_if_first_run
-#REMOVEME? ynh_psql_setup_db --db_user=$db_user --db_name=$db_name
 ynh_psql_execute_as_root --sql="CREATE EXTENSION IF NOT EXISTS unaccent;" --database=$db_name
 ynh_psql_execute_as_root --sql="CREATE EXTENSION IF NOT EXISTS pg_trgm;" --database=$db_name
 ynh_psql_execute_as_root --sql="CREATE EXTENSION IF NOT EXISTS citext;" --database=$db_name
@@ -98,7 +86,7 @@ ynh_script_progression --message="Setting up source files..." --weight=1
 
 #REMOVEME? ynh_app_setting_set --app=$app --key=install_dir --value=$install_dir
 # Download, check integrity, uncompress and patch the source from app.src
-ynh_setup_source --dest_dir="$install_dir/live"
+ynh_setup_source --dest_dir="$install_dir" #/live
 
 chmod 750 "$install_dir"
 chmod -R o-rwx "$install_dir"
@@ -145,16 +133,27 @@ chown -R $app:$app "$data_dir"
 #=================================================
 ynh_script_progression --message="Adding a configuration file..." --weight=1
 
-config="/etc/$app/config.exs"
+config_file="/etc/$app/config.exs"
+ynh_app_setting_set --app=$app --key=config_file --value=$config_file
 
 mkdir -p /etc/$app
 chown $app:$app /etc/$app
+
+
+# Run the config generator
+#ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$install_dir/bin/pleroma_ctl instance gen --output $config_file --output-psql /tmp/setup_db.psql"
+
+# Create the postgres database
+#ynh_exec_as postgres -s $SHELL -lc "psql -f /tmp/setup_db.psql"
+
+# Create the database schema
+#ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$install_dir/bin/pleroma_ctl migrate"
 
 #=================================================
 # SETUP SYSTEMD
 #=================================================
 ### fake akkoma executable
-ln -s "$install_dir/live/bin/pleroma" "$install_dir/live/bin/akkoma"
+ln -s "$install_dir/bin/pleroma" "$install_dir/bin/akkoma" #/live
 
 ynh_script_progression --message="Configuring a systemd service..." --weight=1
 
@@ -166,10 +165,11 @@ ynh_add_systemd_config
 #=================================================
 ynh_script_progression --message="Making setup..." --weight=1
 
-pushd $install_dir/live
+pushd $install_dir #/live
 	#Generate instance
-	ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$install_dir/live/bin/pleroma_ctl instance gen --force \
-	--output $config \
+	# /live
+	ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$install_dir/bin/pleroma_ctl instance gen --force \ 
+	--output $config_file \
 	--output-psql /tmp/setup_db.psql \
 	--domain $domain \
 	--instance-name \"$instance_name\" \
@@ -191,40 +191,40 @@ pushd $install_dir/live
 	--dedupe-uploads Y"
 popd
 
-cat "../conf/ldap.exs" >> "$config"
+cat "../conf/ldap.exs" >> "$config_file"
 
 # Configure proper static & module directories
-cat "../conf/static_and_modules_dir.exs" >>  "$config"
+cat "../conf/static_and_modules_dir.exs" >>  "$config_file"
 
 # Setup frontend switcher
 # Available here : domain.tld/akkoma/frontend
 # It is probably needed to do it before changing "configurable_from_database" as the config file will no longer be used ?
-cat "../conf/frontend_switcher.exs" >> "$config"
+cat "../conf/frontend_switcher.exs" >> "$config_file"
 
 ynh_replace_string --match_string="config :akkoma, configurable_from_database: false" --replace_string="config :akkoma, configurable_from_database: true" --target_file="$config"
 registration_bool_value=`(($registration)) && echo "true" || echo "false"`
 ynh_replace_string --match_string="registrations_open: true" --replace_string="registrations_open: $registration_bool_value" --target_file="$config"
 
-pushd $install_dir/live
-	ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$install_dir/live/bin/pleroma_ctl migrate"
+pushd $install_dir #/live
+	ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$install_dir/bin/pleroma_ctl migrate" #/live
 
 	ynh_systemd_action --service_name=$app --action="start" --log_path=systemd --line_match="Access Pleroma.Web.Endpoint"
 
 	# Add user
-	ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$install_dir/live/bin/pleroma_ctl user new $admin $admin_email --password $password --moderator --admin -y"
+	ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$install_dir/bin/pleroma_ctl user new $admin $admin_email --password $password --moderator --admin -y" #/live
 
 	ynh_systemd_action --service_name=$app --action="stop" --log_path=systemd
 popd
 
 # Calculate and store the config file checksum into the app settings
-ynh_store_file_checksum --file="$config"
+ynh_store_file_checksum --file="$config_file"
 
-chmod 400 "$config"
-chown $app:$app "$config"
+chmod 400 "$config_file"
+chown $app:$app "$config_file"
 
 ynh_script_progression --message="Configure admin UI to allow it to change setting - step 1/2" --weight=1
 # change config file to allow configuration from the admin UI
-ynh_replace_string --match_string="configurable_from_database: false" --replace_string="configurable_from_database: true" --target_file="$config"
+ynh_replace_string --match_string="configurable_from_database: false" --replace_string="configurable_from_database: true" --target_file="$config_file"
 
 #=================================================
 # GENERIC FINALIZATION
