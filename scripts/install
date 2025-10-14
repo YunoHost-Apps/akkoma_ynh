@@ -141,19 +141,13 @@ chown $app:$app /etc/$app
 
 
 # Run the config generator
-ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$install_dir/bin/pleroma_ctl instance gen --output $config_file --output-psql /tmp/setup_db.psql"
+#ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$install_dir/bin/pleroma_ctl instance gen --output $config_file --output-psql /tmp/setup_db.psql"
 
 # Create the postgres database
-ynh_exec_as postgres -s $SHELL -lc "psql -f /tmp/setup_db.psql"
+#ynh_exec_as postgres -s $SHELL -lc "psql -f /tmp/setup_db.psql"
 
 # Create the database schema
-ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "./bin/pleroma_ctl instance gen --output $config_file --output-psql /tmp/setup_db.psql"
-
-# Create the postgres database
-su postgres -s $SHELL -lc "psql -f /tmp/setup_db.psql"
-
-# Create the database schema
-ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$install_dir/bin/pleroma_ctl migrate"
+#ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$install_dir/bin/pleroma_ctl migrate"
 
 #=================================================
 # SETUP SYSTEMD
@@ -171,30 +165,31 @@ ynh_add_systemd_config
 #=================================================
 ynh_script_progression --message="Making setup..." --weight=1
 
-#pushd $install_dir/live
-#	#Generate instance
-#	ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$install_dir/live/bin/pleroma_ctl instance gen --force \
-#	--output $config \
-#	--output-psql /tmp/setup_db.psql \
-#	--domain $domain \
-#	--instance-name \"$instance_name\" \
-#	--admin-email $admin_email \
-#	--notify-email $admin_email \
-#	--dbhost localhost \
-#	--dbname $db_name \
-#	--dbuser $db_user \
-#	--dbpass $db_pwd \
-#	--rum N \
-#	--indexable Y \
-#	--db-configurable Y \
-#	--uploads-dir $data_dir/uploads \
-#	--static-dir $data_dir/static \
-#	--listen-ip 127.0.0.1 \
-#	--listen-port $port \
-#	--strip-uploads Y \
-#	--anonymize-uploads Y \
-#	--dedupe-uploads Y"
-#popd
+pushd $install_dir #/live
+	#Generate instance
+	# /live
+	ynh_exec_warn_less ynh_exec_as $app -s $SHELL -lc "$install_dir/bin/pleroma_ctl instance gen --force \ 
+	--output $config \
+	--output-psql /tmp/setup_db.psql \
+	--domain $domain \
+	--instance-name \"$instance_name\" \
+	--admin-email $admin_email \
+	--notify-email $admin_email \
+	--dbhost localhost \
+	--dbname $db_name \
+	--dbuser $db_user \
+	--dbpass $db_pwd \
+	--rum N \
+	--indexable Y \
+	--db-configurable Y \
+	--uploads-dir $data_dir/uploads \
+	--static-dir $data_dir/static \
+	--listen-ip 127.0.0.1 \
+	--listen-port $port \
+	--strip-uploads Y \
+	--anonymize-uploads Y \
+	--dedupe-uploads Y"
+popd
 
 cat "../conf/ldap.exs" >> "$config"
 
